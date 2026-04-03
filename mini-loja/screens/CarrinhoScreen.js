@@ -14,7 +14,7 @@ export default function CarrinhoScreen() {
             >
                 {carrinho.map((produto) => {
                     return (
-                        <View>
+                        <View key={produto.id}>
                             <Text style={styles.nome}>{produto.nome}</Text>
                         </View>
                     )
