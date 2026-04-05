@@ -1,38 +1,30 @@
-import { View, Text, FlatList, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { useCarrinho } from '../context/CarrinhoContext';
 
 export default function CarrinhoScreen() {
-    const { adicionar, carrinho } = useCarrinho();
-    return (
-        <View style={styles.container}>
-            <Text style={styles.titulo}>🛍️ Carrinho</Text>
-            <Text>🛒 Itens no carrinho: {carrinho.length}</Text>
+  const { adicionar, carrinho } = useCarrinho();
+  const totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titulo}>🛍️ Carrinho</Text>
+      <Text>🛒 Itens no carrinho: {totalItens}</Text>
 
-            <ScrollView 
-                contentContainerStyle={styles.scrollContent} 
-                showsVerticalScrollIndicator={false}
-            >
-                {carrinho.map((produto) => {
-                    return (
-                        <View key={produto.id}>
-                            <Text style={styles.nome}>{produto.nome}</Text>
-                        </View>
-                    )
-                })}
-            </ScrollView>
-
-            {/* <FlatList
-                data={carrinho}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => (
-                    <View style={styles.card}>
-                        <Text style={styles.nome}>{item.nome}</Text>
-                        <Text>R$ {item.preco.toFixed(2)}</Text>
-                    </View>
-                )}
-            /> */}
-        </View>
-    );
+      <FlatList
+        data={carrinho}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+              <Text style={styles.nome}>{item.nome}</Text>
+              <Text style={styles.quantidade}>Qtd: {item.quantidade}</Text>
+              <Text>R$ {(item.preco * item.quantidade).toFixed(2)}</Text>
+          </View>
+        )}
+        ListEmptyComponent={
+          <Text>Seu carrinho está vazio</Text>
+        }
+      />
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, paddingTop: 60 },
