@@ -45,15 +45,17 @@ export default function CarrinhoScreen() {
         }
       />
 
-      <View style={styles.footer}>
-        <View>
-          <Text style={styles.textoVazio}>Total do Pedido:</Text>
-          <Text style={styles.precoItem}>R$ {totalGeral.toFixed(2)}</Text>
+      {carrinho.lenght > 0 && (
+        <View style={styles.footer}>
+          <View>
+            <Text style={styles.textoVazio}>Total do Pedido:</Text>
+            <Text style={styles.precoItem}>R$ {totalGeral.toFixed(2)}</Text>
+          </View>
+          <TouchableOpacity style={styles.botaoFinalizar} >
+            <Text style={styles.textoVazio}>Finalizar Pedido</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.botaoFinalizar} >
-          <Text style={styles.textoVazio}>Finalizar Pedido</Text>
-        </TouchableOpacity>
-      </View>
+      )}
 
     </View>
   );
