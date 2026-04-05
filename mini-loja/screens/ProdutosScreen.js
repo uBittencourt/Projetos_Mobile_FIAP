@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { produtos } from '../data/produtos';
 import { useCarrinho } from '../context/CarrinhoContext';
 
@@ -7,18 +7,24 @@ export default function ProdutosScreen() {
   const totalItens = carrinho.reduce((acc, item) => acc + item.quantidade, 0);
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>🛍️ Produtos</Text>
+      <Text style={styles.titulo}>Produtos</Text>
       <Text>🛒 Itens no carrinho: {totalItens}</Text>
       <FlatList
         data={produtos}
         keyExtractor={item => item.id}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <View style={styles.cardDesc}>
               <Text style={styles.nome}>{item.nome}</Text>
               <Text style={styles.precoItem}>R$ {item.preco.toFixed(2)}</Text>
             </View>
-            <Button title="Adicionar ao Carrinho" onPress={() => adicionar(item)} />
+            <TouchableOpacity
+              style={styles.botaoAdicionar}
+              onPress={() => adicionar(item)}
+            >
+              <Text style={styles.textoAdicionar}>Adicionar ao Carrinho</Text>
+            </TouchableOpacity>
           </View>
         )}
       />
@@ -46,7 +52,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // backgroundColor: '#945555ff'
   },
   precoItem: {
     fontStyle: 'italic'
@@ -55,4 +60,14 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     fontWeight: '600' 
   },
+  botaoAdicionar: {
+    backgroundColor: "#0beb99ff",
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    height: 35
+  },
+  textoAdicionar: {
+    fontWeight: '500'
+  }
 });

@@ -18,7 +18,8 @@ export default function App() {
           <TouchableOpacity style={styles.icon} onPress={() => setTela('Produtos')}> 
             <Ionicons 
               name="book" 
-              size={24} 
+              size={24}
+              color="#0beb99ff"
             />
             <Text style={styles.textIcon}>Produtos</Text>
           </TouchableOpacity>
@@ -27,6 +28,7 @@ export default function App() {
             <Ionicons 
               name="cart" 
               size={24} 
+              color="#0beb99ff"
             />
             <Text style={styles.textIcon}>Carrinho</Text>
           </TouchableOpacity>
