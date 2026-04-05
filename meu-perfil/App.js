@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Linking } from 'react-native';
 
 export default function App() {
   const usuario = {
@@ -6,8 +6,16 @@ export default function App() {
     bio: "Engenharia de Software - 3º ano 💻",
     frase: "O amor é o mais alto grau da inteligência humana",
     seguidores: "400",
-    avatar: "https://media.licdn.com/dms/image/v2/D4D03AQGsgekmBZWdIA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710277158882?e=1773878400&v=beta&t=LescaP9mcU92uuB8B9sX22jrXFNZRUUNTanyuvXOtlU",
+    avatar: "https://media.licdn.com/dms/image/v2/D4D03AQGsgekmBZWdIA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710277158882?e=1776902400&v=beta&t=jGyrQ5Xt7qOQreoy9NM8hkBg12S0TZgslOaFZeuAHIE",
   };
+  const openUrl = async (url) => {
+  const isSupported = await Linking.canOpenURL(url);
+  if (isSupported) {
+    await Linking.openURL(url);
+  } else {
+    Alert.alert('Erro', 'Não foi possível abrir o link');
+  }
+};
   return (
     <View style={styles.container}>
       {/* Avatar */}
@@ -33,8 +41,8 @@ export default function App() {
       </View>
 
       <View style={styles.divLink}>
-          <Text style={styles.link}>Github</Text>
-          <Text style={styles.linkMenor}>https://github.com/uBittencourt</Text>
+          <Text style={styles.linkMenor} onPress={() => Linking.openURL('https://github.com/uBittencourt')}>Github: _ubittencourt</Text>
+          <Text style={styles.linkMenor} onPress={() => Linking.openURL('https://www.linkedin.com/in/vinicius-fernandes-tavares-bittencourt-715147295/')}>LinkedIn: Vinicius Bittencourt</Text>
         </View>
     </View>
   );
