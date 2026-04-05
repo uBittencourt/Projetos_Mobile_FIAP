@@ -10,6 +10,7 @@ export default function App() {
   useEffect(() => {
     carregarTarefas();
   }, []);
+
   const carregarTarefas = async () => {
     const dados = await AsyncStorage.getItem('tarefas');
     if (dados) setTarefas(JSON.parse(dados));
@@ -41,9 +42,21 @@ export default function App() {
     setTarefas([]);
     AsyncStorage.removeItem('tarefas');
   }
+
+  const totalTarefas = tarefas.length;
+  const concluidas = tarefas.filter(t => t.concluida).length;
+  const porcentagem = totalTarefas > 0 ? (concluidas / totalTarefas) * 100 : 0;
+  
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Lista de Tarefas</Text>
+
+      <View style={styles.progressoContainer}>
+        <View style={[styles.barraFundo]}>
+          <View style={[styles.barraPreenchida, { width: `${porcentagem}%` }]} />
+        </View>
+        <Text style={styles.textoProgresso}>{Math.round(porcentagem)}% concluído</Text>
+      </View>
 
       <FlatList
         data={tarefas}
@@ -119,5 +132,26 @@ const styles = StyleSheet.create({
   containerInteracao: {
     alignItems: 'center',
     flexDirection: 'column'
-  }
+  },
+  progressoContainer: {
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  barraFundo: {
+    width: '100%',
+    height: 10,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 5,
+    overflow: 'hidden',
+  },
+  barraPreenchida: {
+    height: '100%',
+    backgroundColor: '#0beb99ff',
+  },
+  textoProgresso: {
+    marginTop: 5,
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '500',
+  },
 });
