@@ -45,7 +45,7 @@ export default function CarrinhoScreen() {
         }
       />
 
-      {carrinho.lenght > 0 && (
+      {carrinho.length > 0 && (
         <View style={styles.footer}>
           <View>
             <Text style={styles.textoVazio}>Total do Pedido:</Text>
