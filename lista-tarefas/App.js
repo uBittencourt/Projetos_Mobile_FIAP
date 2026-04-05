@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, TextInput, Button, FlatList, StyleSheet } from 'react-native';
+import { View, TextInput, Button, FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TarefaItem from './components/TarefaItem';
 
@@ -52,13 +52,37 @@ export default function App() {
         placeholder="Nova tarefa..."
         style={styles.input}
       />
-      <Button title="Adicionar ➕" onPress={adicionarTarefa} />
+      <TouchableOpacity style={styles.botaoAdicionar} onPress={adicionarTarefa}> 
+        <Text style={styles.textoAdicionar}>Adicionar Tarefa</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 40, paddingTop: 60 },
-  input: { borderWidth: 1, borderColor: '#ccc', borderRadius: 8,
-           padding: 10, marginBottom: 10, fontSize: 16 },
+  container: { 
+    flex: 1, 
+    marginLeft: 20,
+    marginRight: 20,
+    paddingTop: 60, 
+    paddingBottom: 50
+  },
+  input: { 
+    borderWidth: 1, 
+    borderColor: '#ccc', 
+    borderRadius: 8,
+    padding: 10, 
+    marginBottom: 10, 
+    fontSize: 16 
+  },
+  botaoAdicionar: {
+    backgroundColor: "#0beb99ff",
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 40,
+    borderRadius: 5
+  },
+  textoAdicionar: {
+    fontWeight: '500'
+  }
 });
