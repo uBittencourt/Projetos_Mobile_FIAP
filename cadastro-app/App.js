@@ -4,6 +4,7 @@ import {
   Switch, ScrollView, Alert, StyleSheet,
   KeyboardAvoidingView, Platform,
 } from 'react-native';
+
 // --- Funções de máscara ---
 const formatarCPF = (v) =>
   v.replace(/\D/g, '')
@@ -16,6 +17,8 @@ const formatarTel = (v) =>
    .replace(/(\d{2})(\d)/, '($1) $2')
    .replace(/(\d{5})(\d{1,4})/, '$1-$2')
    .slice(0, 15);
+const formataEmail = (v) =>
+  v.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g);
 const Campo = ({ label, erro, children }) => (
   <View style={styles.campoWrapper}>
     <Text style={styles.label}>{label}</Text>
@@ -23,24 +26,30 @@ const Campo = ({ label, erro, children }) => (
     {erro ? <Text style={styles.erro}>{erro}</Text> : null}
   </View>
 );
-   // --- Perfis disponíveis ---
+
+// --- Perfis disponíveis ---
 const PERFIS = ['Estudante', 'Profissional', 'Freelancer'];
+
 export default function App() {
-  const [nome, setNome]             = useState('');
-  const [email, setEmail]           = useState('');
-  const [cpf, setCpf]               = useState('');
-  const [tel, setTel]               = useState('');
-  const [perfil, setPerfil]         = useState('');
-  const [termos, setTermos]         = useState(false);
-  const [erros, setErros]           = useState({});
-  const [carregando, setCarregando] = useState(false);
+  const [nome, setNome]                 = useState('');
+  const [email, setEmail]               = useState('');
+  const [cpf, setCpf]                   = useState('');
+  const [tel, setTel]                   = useState('');
+  const [perfil, setPerfil]             = useState('');
+  const [termos, setTermos]             = useState(false);
+  const [erros, setErros]               = useState({});
+  const [carregando, setCarregando]     = useState(false);
+  const [senha, setSenha]               = useState('');
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
   const emailRef = useRef(null);
   const cpfRef   = useRef(null);
   const telRef   = useRef(null);
+
   const validar = () => {
     const e = {};
     if (!nome.trim())          e.nome   = 'Nome obrigatório';
     if (!email.includes('@'))  e.email  = 'E-mail inválido';
+    if (senha.length < 6)      e.senha  = 'Senha deve ter mínimo 6 caracteres';
     if (cpf.length < 14)       e.cpf    = 'CPF incompleto';
     if (tel.length < 14)       e.tel    = 'Telefone incompleto';
     if (!perfil)               e.perfil = 'Escolha um perfil';
@@ -83,7 +92,7 @@ export default function App() {
             ref={emailRef}
             placeholder="maria@email.com"
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(v) => setEmail(formataEmail(v))}
             keyboardType="email-address"
             autoCapitalize="none"
             returnKeyType="next"
@@ -134,6 +143,22 @@ export default function App() {
             ))}
           </View>
         </Campo>
+        <View style={styles.senhaContainer}>
+          <TextInput
+            placeholder="Senha"
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry={!senhaVisivel}
+            style={[styles.input, { flex: 1, marginBottom: 0 }]}
+          />
+          <Text
+            onPress={() => setSenhaVisivel(!senhaVisivel)}
+            style={styles.olho}
+          >
+            {senhaVisivel ? '🙈' : '👁️'}
+          </Text>
+        </View>
+        {erros.senha && <Text style={styles.erro}>{erros.senha}</Text>}
         {/* Termos */}
         <View style={styles.termosRow}>
           <Switch
@@ -206,4 +231,18 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   botaoTexto: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
+  senhaContainer: {
+    flexDirection: 'row', 
+    alignItems: 'center',
+    backgroundColor: '#fff', 
+    borderWidth: 1, 
+    borderColor: '#ddd',
+    borderRadius: 10, 
+    marginBottom: 8,
+  },
+  olho: { 
+    padding: 14, 
+    fontSize: 20 
+  },
+  
 });
