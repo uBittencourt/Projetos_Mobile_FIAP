@@ -28,7 +28,7 @@ export default function Login() {
     const sucesso = await login(email.trim(), senha);
 
     if (sucesso) {
-      router.replace('/home');
+      router.replace('/cinelog');
     } else {
       Alert.alert('Erro', 'E-mail ou senha incorretos!');
     }
