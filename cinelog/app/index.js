@@ -75,10 +75,28 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
-  flex: { flex: 1, backgroundColor: '#f5f5f5' },
-  container: { flex: 1, justifyContent: 'center', padding: 24 },
-  titulo: { fontSize: 32, fontWeight: 'bold', marginBottom: 8, textAlign: 'center', color: '#1a1a1a' },
-  subtitulo: { fontSize: 14, color: '#888', marginBottom: 32, textAlign: 'center' },
+  flex: { 
+    flex: 1, 
+    backgroundColor: '#f5f5f5' 
+  },
+  container: { 
+    flex: 1, 
+    justifyContent: 'center', 
+    padding: 24 
+  },
+  titulo: { 
+    fontSize: 32, 
+    fontWeight: 'bold', 
+    marginBottom: 8, 
+    textAlign: 'center', 
+    color: '#1a1a1a' 
+  },
+  subtitulo: { 
+    fontSize: 14, 
+    color: '#888', 
+    marginBottom: 32, 
+    textAlign: 'center' 
+  },
   input: {
     backgroundColor: '#fff',
     borderWidth: 1,
@@ -89,7 +107,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#1a1a1a',
   },
-  botao: { backgroundColor: '#6200ea', padding: 14, borderRadius: 8, alignItems: 'center', marginTop: 8 },
-  textoBotao: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
-  link: { marginTop: 16, textAlign: 'center', color: '#6200ea', fontSize: 14 },
+  botao: { 
+    backgroundColor: '#0beb99ff', 
+    padding: 14, 
+    borderRadius: 8, 
+    alignItems: 'center', 
+    marginTop: 8 
+  },
+  textoBotao: { 
+    color: '#fff', 
+    fontWeight: 'bold', 
+    fontSize: 16 
+  },
+  link: { 
+    marginTop: 16, 
+    textAlign: 'center', 
+    color: '#0beb99ff', 
+    fontSize: 14 
+  },
 });
