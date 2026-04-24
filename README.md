@@ -28,4 +28,7 @@ npx expo start
 Aqui se deu o início da matéria com uma rápida revisão de funções fundamentais para o trabalho do restante do ano com JavaScript.
 
 ## Meu Perfil
-Primeiro contato com os componentes do React Native, criando um perfil sobre a gente e compartilhando links para contato
+Primeiro contato com os componentes do React Native, criando um perfil sobre a gente e compartilhando links para contato.
+
+## Meu App
+Trabalhando com estados e hooks dentro do projeto, exemplo feito foi um app de hidratação que faz a contagem de copos d'água bebidos, mudando o estilo caso atinja a meta.

@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
   titulo:     { fontSize: 32, fontWeight: 'bold', marginBottom: 2 },
   subtitulo:     { fontSize: 22, fontWeight: '400', marginBottom: 20},
 //   descricao:  { fontSize: 16, color: '#555', marginBottom: 24 },
-  voltar:     { fontSize: 16, color: '#E83D84', fontWeight: '600' },
+  voltar:     { fontSize: 16, color: '#0beb99ff', fontWeight: '600' },
 //   botao:     { backgroundColor: '#E83D84', padding: 16, borderRadius: 12 },
 //   botaoTexto:{ color: '#fff', fontSize: 16, fontWeight: '600' },
-  foto:      { backgroundColor: '#E83D84', borderRadius: 50, height: 100, width: 100, alignItems: 'center', justifyContent: 'center', marginBottom: 15},
+  foto:      { backgroundColor: '#0beb99ff', borderRadius: 50, height: 100, width: 100, alignItems: 'center', justifyContent: 'center', marginBottom: 15},
   txtFoto:   { fontSize: 35, fontWeight: 'bold', color: '#fff'},
   containerTec: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10, marginBottom: 20},
-  tecnologia: { gap: 5, borderRadius: 10, width: 100, height: 90, backgroundColor: '#E83D84', alignItems: 'center', justifyContent: 'center'},
+  tecnologia: { gap: 5, borderRadius: 10, width: 100, height: 90, backgroundColor: '#0beb99ff', alignItems: 'center', justifyContent: 'center'},
   txtTecnologia: { fontSize: 18, fontWeight: 'bold', color: '#fff'}
 });

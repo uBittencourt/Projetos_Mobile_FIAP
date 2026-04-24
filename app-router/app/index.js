@@ -18,8 +18,8 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#f5f5f5' },
   titulo:    { fontSize: 32, fontWeight: 'bold', marginBottom: 24 },
-  botao:     { backgroundColor: '#E83D84', padding: 16, borderRadius: 12 },
+  botao:     { backgroundColor: '#0beb99ff', padding: 16, borderRadius: 12 },
   botaoTexto:{ color: '#fff', fontSize: 16, fontWeight: '600' },
-  foto:      { backgroundColor: '#E83D84', borderRadius: 50, height: 100, width: 100, alignItems: 'center', justifyContent: 'center', marginBottom: 15},
+  foto:      { backgroundColor: '#0beb99ff', borderRadius: 50, height: 100, width: 100, alignItems: 'center', justifyContent: 'center', marginBottom: 15},
   txtFoto:   { fontSize: 35, fontWeight: 'bold', color: '#fff'}
 });
