@@ -88,7 +88,7 @@ export default function CineLog() {
             </View>
           )}
           ListEmptyComponent={
-            <Text style={styles.vazio}>Nenhum filme no seu catálogo.</Text>
+            <Text style={styles.vazio}>Nenhum filme ou série no seu catálogo.</Text>
           }
         />
 
@@ -96,7 +96,7 @@ export default function CineLog() {
           <View style={styles.inputsRow}>
             <TextInput
               style={[styles.input, { flex: 3 }]}
-              placeholder="Nome do filme"
+              placeholder="Nome do filme ou séri5"
               value={nomeFilme}
               onChangeText={setNomeFilme}
             />
