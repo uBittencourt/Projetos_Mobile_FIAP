@@ -11,7 +11,7 @@ export default function App() {
   useEffect(() => {
     if (copos >= meta) {
       setMensagem('🏆 Meta do dia atingida!');
-      setContainer('#360f5a');
+      setContainer('#00ffa2ff');
     };
     if (copos < meta) {
       setMensagem(`${meta - copos} copos até a meta!`);
@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
   },
   msg: { 
-    color: '#aaa', 
+    color: '#fff', 
     fontSize: 18, 
     marginBottom: 12 
   },
   msgCount: { 
-    color: '#aaa', 
+    color: '#fff', 
     fontSize: 24, 
     marginBottom: 12,
     textAlign: 'center'
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   btn: { 
     marginTop: 24, 
-    backgroundColor: '#6c63ff', 
+    backgroundColor: '#09c781ff', 
     paddingHorizontal: 40, 
     paddingVertical: 16, 
     borderRadius: 50 
