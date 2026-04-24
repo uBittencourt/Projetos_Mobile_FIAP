@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform, TextInput, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../context/AuthContext';
+import { salvarFilmes, buscarFilmes, deletarFilme } from '../storage/cineStorage';
 
 export default function CineLog() {
   const { usuarioLogado, logout } = useAuth();
@@ -38,6 +39,11 @@ export default function CineLog() {
     setNotaFilme('');
   }
 
+  async function handleDeletar(filme) {
+    await deletarFilme(filme);
+    setFilmes(lista => lista.filter(f => f.titulo !== filme));
+  }
+
   useEffect(() => {
     async function carregarDados() {
       const dados = await buscarFilmes();
@@ -70,8 +76,15 @@ export default function CineLog() {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.card}>
-              <Text style={styles.filmeTitulo}>{item.titulo}</Text>
-              <Text>{renderEstrelas(item.nota)}</Text>
+              <View style={styles.cardTexto}>
+                <Text style={styles.filmeTitulo}>{item.titulo}</Text>
+                <Text>{renderEstrelas(item.nota)}</Text>
+              </View>
+              <View style={styles.cardBotao}>
+                <TouchableOpacity style={styles.botaoDel} onPress={() => handleDeletar(item.titulo)}>
+                  <Text style={styles.textoBotao}>-</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
           ListEmptyComponent={
@@ -137,6 +150,7 @@ const styles = StyleSheet.create({
     marginBottom: 32 
   },
   card: {
+    flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 20,
@@ -145,10 +159,25 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: '#0beb99ff',
   },
-  cardTexto: { 
-    fontSize: 15, 
-    color: '#333', 
-    lineHeight: 22 
+  cardTexto: {
+    flex: 1,
+  },
+  filmeTitulo: {
+    fontStyle: 'italic',
+    fontWeight: '400',
+    fontSize: 15
+  },
+  cardBotao: {
+    width: '15%',
+    paddingLeft: 2
+  },
+  botaoDel: {
+    backgroundColor: '#e53935',
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
   },
   botaoLogout: {
     backgroundColor: '#e53935',
@@ -160,7 +189,7 @@ const styles = StyleSheet.create({
   textoBotao: { 
     color: '#fff', 
     fontWeight: 'bold', 
-    fontSize: 16 
+    fontSize: 20 
   },
   formulario: {
     borderTopWidth: 1,

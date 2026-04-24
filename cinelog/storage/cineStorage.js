@@ -23,3 +23,13 @@ export async function buscarFilmes() {
     return [];
   }
 }
+
+export async function deletarFilme(filme) {
+  try {
+    const dados = await buscarFilmes();
+    let novaLista = dados.filter(item => item.titulo !== filme);
+    await salvarFilmes(novaLista);
+  } catch (e) {
+    console.error('Erro ao deletar filme: ', e);
+  }
+}
