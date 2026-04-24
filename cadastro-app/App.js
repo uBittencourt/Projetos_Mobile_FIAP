@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity,
   Switch, ScrollView, Alert, StyleSheet,
@@ -31,34 +31,43 @@ const Campo = ({ label, erro, children }) => (
 const PERFIS = ['Estudante', 'Profissional', 'Freelancer'];
 
 export default function App() {
-  const [nome, setNome]                 = useState('');
-  const [email, setEmail]               = useState('');
-  const [cpf, setCpf]                   = useState('');
-  const [tel, setTel]                   = useState('');
-  const [perfil, setPerfil]             = useState('');
-  const [termos, setTermos]             = useState(false);
-  const [erros, setErros]               = useState({});
-  const [carregando, setCarregando]     = useState(false);
-  const [senha, setSenha]               = useState('');
-  const [senhaVisivel, setSenhaVisivel] = useState(false);
+  const [nome, setNome]                         = useState('');
+  const [email, setEmail]                       = useState('');
+  const [cpf, setCpf]                           = useState('');
+  const [tel, setTel]                           = useState('');
+  const [perfil, setPerfil]                     = useState('');
+  const [termos, setTermos]                     = useState(false);
+  const [erros, setErros]                       = useState({});
+  const [carregando, setCarregando]             = useState(false);
+  const [senha, setSenha]                       = useState('');
+  const [senhaVisivel, setSenhaVisivel]         = useState(false);
+  const [formularioValido, setFormularioValido] = useState(false);
   const emailRef = useRef(null);
   const cpfRef   = useRef(null);
   const telRef   = useRef(null);
 
-  const validar = () => {
+  useEffect(() => {
     const e = {};
-    if (!nome.trim())          e.nome   = 'Nome obrigatório';
-    if (!email.includes('@'))  e.email  = 'E-mail inválido';
-    if (senha.length < 6)      e.senha  = 'Senha deve ter mínimo 6 caracteres';
-    if (cpf.length < 14)       e.cpf    = 'CPF incompleto';
-    if (tel.length < 14)       e.tel    = 'Telefone incompleto';
-    if (!perfil)               e.perfil = 'Escolha um perfil';
-    if (!termos)               e.termos = 'Aceite os termos para continuar';
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Validações individuais
+    if (nome.length > 0 && nome.trim().length < 3) e.nome = 'Nome muito curto';
+    if (email.length > 0 && !emailRegex.test(email)) e.email = 'E-mail inválido';
+    if (cpf.length > 0 && cpf.length < 14) e.cpf = 'CPF incompleto';
+    if (tel.length > 0 && tel.length < 14) e.tel = 'Telefone incompleto';
+    if (senha.length > 0 && senha.length < 6) e.senha = 'Mínimo 6 caracteres';
+    
     setErros(e);
-    return Object.keys(e).length === 0;
-  };
+
+    // Verifica se todos os campos estão preenchidos E se não há erros na lista
+    const tudoPreenchido = nome && email && cpf && tel && perfil && termos && senha;
+    const semErros = Object.keys(e).length === 0;
+    
+    setFormularioValido(tudoPreenchido && semErros);
+  }, [nome, email, cpf, tel, senha, perfil, termos]);
+
   const handleSubmit = () => {
-    if (!validar()) return;
+    if (!formularioValido) return;
     setCarregando(true);
     setTimeout(() => {
       setCarregando(false);
@@ -92,7 +101,7 @@ export default function App() {
             ref={emailRef}
             placeholder="maria@email.com"
             value={email}
-            onChangeText={(v) => setEmail(formataEmail(v))}
+            onChangeText={(v) => setEmail(v)}
             keyboardType="email-address"
             autoCapitalize="none"
             returnKeyType="next"
@@ -164,16 +173,20 @@ export default function App() {
           <Switch
             value={termos}
             onValueChange={setTermos}
-            trackColor={{ false: '#ccc', true: '#6c47ff' }}
+            trackColor={{ false: '#ccc', true: '#0beb99' }}
+            thumbColor={termos ? '#fff' : '#f4f3f4'}
           />
           <Text style={styles.termosText}>Aceito os termos de uso</Text>
         </View>
         {erros.termos ? <Text style={styles.erro}>{erros.termos}</Text> : null}
         {/* Botão */}
         <TouchableOpacity
-          style={[styles.botao, carregando && { opacity: 0.6 }]}
+          style={[
+            styles.botao, 
+            formularioValido ? styles.botaoValido : styles.botaoInvalido,
+            carregando && { opacity: 0.6 }]}
           onPress={handleSubmit}
-          disabled={carregando}
+          disabled={!formularioValido || carregando}
         >
           <Text style={styles.botaoTexto}>
             {carregando ? 'Enviando...' : 'Criar conta'}
@@ -196,8 +209,15 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     color: '#333',
   },
-  campoWrapper: { marginBottom: 16 },
-  label: { fontSize: 14, fontWeight: '600', color: '#444', marginBottom: 6 },
+  campoWrapper: { 
+    marginBottom: 16 
+  },
+  label: { 
+    fontSize: 14, 
+    fontWeight: '600', 
+    color: '#444', 
+    marginBottom: 6 
+  },
   input: {
     backgroundColor: '#fff',
     borderWidth: 1,
@@ -206,31 +226,58 @@ const styles = StyleSheet.create({
     padding: 14,
     fontSize: 16,
   },
-  inputErro: { borderColor: 'red' },
-  erro: { color: 'red', fontSize: 12, marginTop: 4 },
-  chips: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
+  inputErro: { 
+    borderColor: 'red' 
+  },
+  erro: { 
+    color: 'red', 
+    fontSize: 12, 
+    marginTop: 4 
+  },
+  chips: { 
+    flexDirection: 'row', 
+    gap: 8, 
+    flexWrap: 'wrap' 
+  },
   chip: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
     backgroundColor: '#eee',
   },
-  chipAtivo: { backgroundColor: '#6c47ff' },
+  chipAtivo: { 
+    backgroundColor: '#0beb99' 
+  },
   termosRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
     marginBottom: 4,
   },
-  termosText: { fontSize: 15, color: '#333' },
+  termosText: { 
+    fontSize: 15, 
+    color: '#333' 
+  },
   botao: {
-    backgroundColor: '#6c47ff',
     borderRadius: 10,
     padding: 16,
     alignItems: 'center',
     marginTop: 24,
   },
-  botaoTexto: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
+  botaoInvalido: { 
+    backgroundColor: '#ccc' 
+  }, 
+  botaoValido: { 
+    backgroundColor: '#0beb99' 
+  },
+  inputErro: { 
+    borderColor: '#ff4d4d' 
+  },
+  botaoTexto: { 
+    color: '#fff', 
+    fontSize: 18, 
+    fontWeight: 'bold' 
+  },
   senhaContainer: {
     flexDirection: 'row', 
     alignItems: 'center',
@@ -243,6 +290,5 @@ const styles = StyleSheet.create({
   olho: { 
     padding: 14, 
     fontSize: 20 
-  },
-  
+  }
 });
