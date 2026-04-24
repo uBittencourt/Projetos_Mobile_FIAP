@@ -11,19 +11,27 @@ export default function App() {
   const [confirmaSenha, setConfirmaSenha] = useState('');
   const [senhaVisivel, setSenhaVisivel] = useState(false);
   const [erros, setErros] = useState({});
+  const [formValido, setFormValido] = useState(false);
 
-  const validar = () => {
-    const novosErros = {};
-    if (!nome.trim()) novosErros.nome = 'Nome obrigatório';
-    if (!email.includes('@')) novosErros.email = 'E-mail inválido';
-    if (senha.length < 6) novosErros.senha = 'Senha deve ter mínimo 6 caracteres';
-    if (senha !== confirmaSenha) novosErros.confirmaSenha = 'As senhas devem ser iguais';
-    setErros(novosErros);
-    return Object.keys(novosErros).length === 0;
-  };
+  useEffect(() => {
+    const e = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (nome.length > 0 && nome.trim().length < 3) e.nome = 'Nome muito curto';
+    if (email.length > 0 && !emailRegex.test(email)) e.email = 'E-mail inválido';
+    if (senha.length > 0 && senha.length < 6) e.senha = 'Mínimo 6 caracteres';
+    if (confirmaSenha.length > 0 && senha !== confirmaSenha) e.confirmaSenha = 'As senhas não conferem';
+
+    setErros(e);
+
+    const tudoPreenchido = nome && email && senha && confirmaSenha;
+    const semErros = Object.keys(e).length === 0;
+
+    setFormValido(tudoPreenchido && semErros);
+  }, [nome, email, senha, confirmaSenha]);
 
   const handleLogin = () => {
-    if (validar()) {
+    if (formValido) {
       Alert.alert('Login realizado!', `Bem-vindo, ${nome}! 🎉`);
     }
   };
@@ -80,7 +88,13 @@ export default function App() {
       </View>
       {erros.confirmaSenha && <Text style={styles.erro}>{erros.confirmaSenha}</Text>}
       
-      <TouchableOpacity style={styles.botao} onPress={handleLogin}>
+      <TouchableOpacity 
+        style={[
+          styles.botao,
+          formValido ? styles.botaoAtivo : styles.botaoInativo
+        ]} 
+        onPress={handleLogin}
+        disabled={!formValido}>
         <Text style={styles.botaoTexto}>Entrar</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
@@ -128,11 +142,16 @@ const styles = StyleSheet.create({
     marginLeft: 4 
   },
   botao: {
-    backgroundColor: '#6c47ff', 
     borderRadius: 10,
     padding: 16, 
     marginTop: 16, 
     alignItems: 'center',
+  },
+  botaoInativo: { 
+    backgroundColor: '#ccc' 
+  },
+  botaoAtivo: { 
+    backgroundColor: '#0beb99'
   },
   botaoTexto: { 
     color: '#fff', 

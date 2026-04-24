@@ -50,7 +50,6 @@ export default function App() {
     const e = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Validações individuais
     if (nome.length > 0 && nome.trim().length < 3) e.nome = 'Nome muito curto';
     if (email.length > 0 && !emailRegex.test(email)) e.email = 'E-mail inválido';
     if (cpf.length > 0 && cpf.length < 14) e.cpf = 'CPF incompleto';
