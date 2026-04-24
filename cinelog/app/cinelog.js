@@ -88,7 +88,9 @@ export default function CineLog() {
             </View>
           )}
           ListEmptyComponent={
-            <Text style={styles.vazio}>Nenhum filme ou série no seu catálogo.</Text>
+            <View style={styles.vazio}>
+              <Text>Nenhum filme ou série no seu catálogo.</Text>
+            </View>
           }
         />
 
@@ -96,7 +98,7 @@ export default function CineLog() {
           <View style={styles.inputsRow}>
             <TextInput
               style={[styles.input, { flex: 3 }]}
-              placeholder="Nome do filme ou séri5"
+              placeholder="Nome do filme ou série"
               value={nomeFilme}
               onChangeText={setNomeFilme}
             />
@@ -135,19 +137,21 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    alignItems: 'center', 
   },
   titulo: { 
     fontSize: 26, 
     fontWeight: 'bold', 
     marginBottom: 4, 
-    textAlign: 'center', 
     color: '#1a1a1a' 
   },
   subtitulo: { 
     fontSize: 13, 
     color: '#888', 
     marginBottom: 32 
+  },
+  vazio: {
+    flex: 1,
+    alignItems: 'center'
   },
   card: {
     flexDirection: 'row',
