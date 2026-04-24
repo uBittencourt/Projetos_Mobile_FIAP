@@ -6,7 +6,8 @@ export default function App() {
     bio: "Engenharia de Software - 3º ano 💻",
     frase: "O amor é o mais alto grau da inteligência humana",
     seguidores: "400",
-    avatar: "https://media.licdn.com/dms/image/v2/D4D03AQGsgekmBZWdIA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710277158882?e=1776902400&v=beta&t=jGyrQ5Xt7qOQreoy9NM8hkBg12S0TZgslOaFZeuAHIE",
+    // avatar: "https://media.licdn.com/dms/image/v2/D4D03AQGsgekmBZWdIA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710277158882?e=1776902400&v=beta&t=jGyrQ5Xt7qOQreoy9NM8hkBg12S0TZgslOaFZeuAHIE",
+    avatar: require('./assets/foto_pessoal.jpg'),
   };
   const openUrl = async (url) => {
   const isSupported = await Linking.canOpenURL(url);
@@ -20,7 +21,7 @@ export default function App() {
     <View style={styles.container}>
       {/* Avatar */}
       <Image
-        source={{ uri: usuario.avatar }}
+        source={ usuario.avatar }
         style={styles.avatar}
       />
 
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#0a0a0a',
+    backgroundColor: '#ffffffff',
     padding: 20,
   },
   avatar: {
@@ -60,46 +61,46 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     borderWidth: 3,
-    borderColor: '#E1306C',
+    borderColor: '#0beb99ff',
     marginBottom: 16,
   },
   nome: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#000000ff',
     marginBottom: 8,
     marginTop: 8,
   },
   bio: {
     fontSize: 14,
-    color: '#aaa',
+    color: '#000000ff',
     textAlign: 'center',
   },
   bioFrase: {
     fontSize: 14,
-    color: '#aaa',
+    color: '#000000ff',
     textAlign: 'center',
     marginBottom: 10,
   },
   stats: {
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#0beb99ff',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   divFrases: {
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#0beb99ff',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 20,
+    borderRadius: 10,
     marginTop: 10,
   },
   stat: {
-    color: '#fff',
+    color: '#000000ff',
     fontSize: 14,
   },
   linkTitulo: {
-    color: '#fff',
+    color: '#000000ff',
     fontWeight: 'bold',
     fontSize: 16,
     textAlign: "center"
@@ -111,11 +112,13 @@ const styles = StyleSheet.create({
     marginTop: 3
   },
   link: {
-    color: '#fff',
+    color: '#000000ff',
     fontSize: 16,
+    fontStyle: 'italic'
   },
   linkMenor: {
-    color: '#fff',
+    color: '#000000ff',
     fontSize: 14,
+    fontStyle: 'italic'
   },
 });
